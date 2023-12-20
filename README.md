@@ -117,7 +117,7 @@ optional arguments:
 
 # Mutation operators used in the evaluation of MERLIN
 
-A more in-depth explanation of each mutation operator is available. [Download PDF - Mutation Operators Details](./doc/mutation_operators_details.pdf)
+A more in-depth explanation of each mutation operator is available. [Download PDF - Mutation Operators Details](doc/Mutation%20Operators%20in%20MERLIN.pdf)
 
 
 | Original Code | RUSD Mutant |
