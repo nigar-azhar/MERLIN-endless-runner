@@ -114,3 +114,59 @@ optional arguments:
                         size of game frame in pixels
 ```
 
+
+# Mutation operators used in the evaluation of MERLIN
+
+A more in-depth explanation of each mutation operator is available. [Download PDF - Mutation Operators Details](./doc/mutation_operators_details.pdf)
+
+
+| Original Code | RUSD Mutant |
+| --- | --- |
+| ![RUSD](doc/mutation/RUSD.png) | ![RUSD Mutant](doc/mutation/RUSDm.png) |
+
+| Original Code | RUAR Mutant |
+| --- | --- |
+| ![RUAR](doc/mutation/RUAI.png) | ![RUAR Mutant](doc/mutation/RUAIm.png) |
+
+| Original Code | RUOR Mutant |
+| --- | --- |
+| ![RUOR](doc/mutation/RUAI.png) | ![RUOR Mutant](doc/mutation/RUORm.png) |
+
+| Original Code | DCD Mutant |
+| --- | --- |
+| ![DCD](doc/mutation/DCD.png) | ![DCD Mutant](doc/mutation/DCDm.png) |
+
+| Original Code | DAL Mutant |
+| --- | --- |
+| ![DAL](doc/mutation/DAL.png) | ![DAL Mutant](doc/mutation/DALm.png)|
+
+| Original Code | ARR Mutant |
+| --- | --- |
+| ![ARR](doc/mutation/ARR.png) | ![ARR Mutant](doc/mutation/ARRm.png) |
+
+| Original Code | ADD Mutant |
+| --- | --- |
+| ![ADD](doc/mutation/ADD.png) | ![ADD Mutant](doc/mutation/ADDm2.png) |
+
+| Original Code | AVI Mutant |
+| --- | --- |
+| ![AVI](doc/mutation/AVI.png) | ![AVI Mutant](doc/mutation/AVIm.png) |
+
+| Original Code | AVD Mutant |
+| --- | --- |
+| ![AVD](doc/mutation/AVI.png) | ![AVD Mutant](doc/mutation/AVDm.png) |
+
+| Original Code | GFA Mutant |
+| --- | --- |
+| ![GFA](doc/mutation/DAL.png) | ![GFA Mutant](doc/mutation/GFAm.png)|
+
+| Original Code | GFT Mutant |
+| --- | --- |
+| ![GFT](doc/mutation/GFT.png) | ![GFT Mutant](doc/mutation/GFTm.png) |
+
+| Original Code | GFS Mutant |
+| --- | --- |
+| ![GFS](doc/mutation/GFT.png) | ![GFS Mutant](doc/mutation/GFSm.png) |
+
+**Figure: Examples of mutation operators.**
+
