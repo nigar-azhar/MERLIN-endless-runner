@@ -114,6 +114,17 @@ optional arguments:
                         size of game frame in pixels
 ```
 
+# Parameters specifications for MERLIN agent
+
+MERLIN agent adopts a standard DRL algorithm called Deep Q-learning (DQN) (Mnih et al. 2013). To use the DRL algorithm, we need to define the dimensions for input that we will feed to the neural network that acts as the Q-function and the dimensions of the output layer.  The input dimensions are the visible screen cross-section of the game. The output dimension will be the total number of user actions. This information is extracted from the class diagram. The architecture of the neural network of the DRL agent is shown in figure below and  described as follows.
+
+The input to the neural network consists of 4 consecutive frames of game stacked together. The first hidden layer convolves 32 8 × 8 filters with stride 4 with the input image and applies a rectifier nonlinearity. The second hidden layer convolves 64 4 × 4 filters with stride 2, again followed by a rectifier nonlinearity. The third hidden layer convolves 64 3 × 3 filters with stride 1, again followed by a rectifier nonlinearity. The final hidden layer is fully-connected and consists of 512 rectifier units. The output layer is a fully-connected linear layer with a single output for each valid action described by the user. Other hyperparameters include learning rate α,  discount factor γ, and initial exploration probability e. As default, we use 1e-6, 0.99, and 0.99, respectively. 
+
+The loss function is the mean squared error loss between the predicted and target Q-values. The target Q-values are calculated using the Bellman equation, which considers the immediate reward received from the action taken in the current timestep and the estimated future rewards from subsequent timesteps. The mean squared error loss is then minimized using stochastic gradient descent.
+
+![Network architecture](doc/dqnarch.png)
+
+
 
 # Mutation operators used in the evaluation of MERLIN
 
