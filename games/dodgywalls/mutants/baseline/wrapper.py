@@ -6,7 +6,7 @@
 import pygame
 import random
 
-from games.dodgywalls.actual.objects import Bar, Dot, Player, Message, Particle, ScoreCard, Button
+from games.dodgywalls.mutants.baseline.objects import Bar, Dot, Player,  Particle, ScoreCard
 
 import cv2
 
@@ -133,6 +133,8 @@ class Game():
         self.bar_score = False
         self.dot_score = False
         self.prev_bar_score = False
+        self.milestone = False
+        self.milestone_2 = False
 
         #self.start_time = current_time
 
@@ -255,13 +257,17 @@ class Game():
             self.dot_group.add(self.dot)
 
             self.start_time = current_time
-            self.score += 1
-            reward += 1
+
+            #self.bar_score = True
 
             #if not self.prev_bar_score:
 
-        if self.bar.rect.x <= 136 and self.bar.rect.x > 132:
+        #if self.bar.rect.x <= 136 and self.bar.rect.x > 130:
+            self.score += 1
+            reward += 1
             self.bar_score = True
+        # else:
+        #     self.bar_score = False
         for dot in self.dot_group:
             if dot.rect.colliderect(self.p):
                 dot.kill()
@@ -270,6 +276,9 @@ class Game():
                 #print("dot-update",self.dot_score,self.score)
                 reward += 5
                 self.score_msg.animate = True
+                # self.score += 1
+                # reward += 1
+                # self.bar_score = True
 
         if pygame.sprite.spritecollide(self.p, self.bar_group, False):
             x, y = self.p.rect.center
@@ -305,6 +314,28 @@ class Game():
 
 
         self.prev_bar_score = self.bar_score
+
+        # milestones
+        if self.score > 10:
+            self.milestone = True
+
+        if self.score > 12:
+            self.milestone = True
+
+        # if self.dot_score>3:
+        #     self.milestone = True
+
+        if pygame.time.get_ticks() > self.fps * 100:
+            self.milestone_2 = True
+
+        if pygame.time.get_ticks() > self.fps * 150:
+            self.milestone_2 = True
+
+        if self.milestone:
+            print("score miles stone achieved")
+
+        if self.milestone:
+            print("time miles stone achieved")
 
         return frame, reward, done
 

@@ -75,6 +75,7 @@ usage: run.py [-h] [--agent {merlin,random}]
                [--log_frequency LOG_FREQUENCY]
                [--save_frequency SAVE_FREQUENCY] [--n_actions N_ACTIONS]
                [--frame_size FRAME_SIZE]
+               [--time_budget HOURS]
 
 experiment options
 
@@ -112,6 +113,8 @@ optional arguments:
                         number of game output actions
   --frame_size FRAME_SIZE
                         size of game frame in pixels
+  --time_budget HOURS
+                        number of hours to run the agent  
 ```
 
 # Parameters specifications for MERLIN agent

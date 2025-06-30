@@ -19,7 +19,7 @@ cd ..
 #done
 folder_names=$(find games/"$game_name"/mutants/* -type d -maxdepth 1 -exec basename {} \;)
 
-for ((counter=5; counter<=30; counter++)); do
+for ((counter=1; counter<=30; counter++)); do
   echo "Run # '$counter'"
   # Use the folder names in a command
   for folder_name in $folder_names; do
@@ -27,7 +27,7 @@ for ((counter=5; counter<=30; counter++)); do
           #echo "Folder name is not 'pycache'"
           echo "Processing mutant: $folder_name"
           #echo "What"
-          python run.py --agent=merlin --mode=eval --exp_name=clean --weights_dir="$game_name"-wieghts/"$wieght_file" --game=$game_name --mutant=$folder_name
+          python run.py --agent=merlin --mode=eval --exp_name=clean --weights_dir="$game_name"-wieghts/"$wieght_file" --game=$game_name --mutant=$folder_name --tries=20
   #    else
   #        echo "Folder name is 'pycache'"
       fi
@@ -37,7 +37,7 @@ for ((counter=5; counter<=30; counter++)); do
   done
 
   # Name of the folder to be created
-  run_folder_name=mutation-testing-logs/dqn/"$game_name"/run_"$counter"
+  run_folder_name=logs/mutation-testing-logs/merlin/"$game_name"/run_"$counter"
 
   # Create the folder if it doesn't exist
   if [ ! -d "$run_folder_name" ]; then
@@ -48,9 +48,9 @@ for ((counter=5; counter<=30; counter++)); do
   fi
 
   # Move all .tsv files to the created folder
-  mv mutation-testing-logs/dqn/"$game_name"/*.tsv "$run_folder_name"/
-  # Move all .tsv files to the created folder
-  mv mutation-testing-logs/dqn/"$game_name"/*.csv "$run_folder_name"/
+  mv logs/mutation-testing-logs/merlin/"$game_name"/*.tsv "$run_folder_name"/
+  # Move all .csv files to the created folder
+  mv logs/mutation-testing-logs/merlin/"$game_name"/*.csv "$run_folder_name"/
 
   echo "All .tsv files moved to '$run_folder_name' folder."
 

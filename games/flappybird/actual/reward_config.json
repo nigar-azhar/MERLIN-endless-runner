@@ -1,0 +1,5 @@
+{
+  "persistence_reward": 2,
+  "change_reward": 1 ,
+  "terminal_reward": -10
+}

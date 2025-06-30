@@ -73,16 +73,22 @@ class Game():
 
     # get game state information information
     def get_game_state(self):
-        flappyBird = {'yCoordinate': self.player.y, 'xCoordinate': self.player.x +self.player.image.get_width()}
-        topPipe = {'yCoordinate': self.pipes[0].y_upper_end-3 , 'xCoordinate': self.pipes[0].x}
-        bottomPipe = {'yCoordinate': self.pipes[0].y_upper_end+173 , 'xCoordinate': self.pipes[0].x}
+        flappyBird = {'yCoordinate': self.player.y, 'xCoordinate': self.player.x + self.player.image.get_width(),
+                      'width': self.player.image.get_width(), 'hieght': self.player.image.get_height()}
+        topPipe = {'yCoordinate': self.pipes[0].y_upper_end, 'xCoordinate': self.pipes[0].x, 'isActive': True}
+        bottomPipe = {'yCoordinate': self.pipes[0].y_upper_end + 158, 'xCoordinate': self.pipes[0].x, 'isActive': True}
+        scoreupdate = {'pipe_pass': False, 'coin': False, 'heart': False}
+        coin = {'yCoordinate': -1, 'xCoordinate': -1}
+        heart = {'yCoordinate': -1, 'xCoordinate': -1, 'timeElapsed': 0, 'isActive': False}
 
-        game_state = { "flappyBird": flappyBird,
-                       "topPipe": topPipe,
-                       "bottomPipe": bottomPipe,
-                       "score": self.game_text.score
-
-        }
+        game_state = {"flappyBird": flappyBird,
+                      "topPipe": topPipe,
+                      "bottomPipe": bottomPipe,
+                      "coin": coin,
+                      'heart': heart,
+                      "score": 0,
+                      'scoreupdate': scoreupdate
+                      }
 
         return game_state
 

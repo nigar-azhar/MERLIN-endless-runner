@@ -1,3 +1,4 @@
+import math
 import random
 
 import pygame
@@ -6,6 +7,9 @@ from pygame.sprite import Sprite
 
 import os
 import sys
+
+
+WHITE = (255, 255, 255)
 
 # Redirect standard output to /dev/null
 sys.stdout = open(os.devnull, 'w')
@@ -81,11 +85,16 @@ class Pipe(Sprite):
         self.x -= 4
 
 
-    def draw(self):
+    def draw(self, booster_flag):
         """
         Draw the sprite to the game display.
         """
+        if booster_flag:
+            self.image.set_alpha(100)
+        else:
+            self.image.set_alpha(255)
         self.surface.blit(self.image, (self.x, self.y))
+        #print("draw pipes", self.rect.topleft)
 
     @property
     def rect(self):
@@ -95,10 +104,10 @@ class Pipe(Sprite):
         #print(self.x, self.y, self.image.get_width(), self.image.get_height())
         return Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
 
-    def get_pipe_Hieght(self):
-        #print((self.x, self.y, self.image.get_width(), self.image.get_height()))
-        #print(PIPE_LOWER.get_height())
-        return PIPE_LOWER.get_height()
+    # def get_pipe_Hieght(self):
+    #     #print((self.x, self.y, self.image.get_width(), self.image.get_height()))
+    #     #print(PIPE_LOWER.get_height())
+    #     return PIPE_LOWER.get_height()
 
 
 
@@ -179,10 +188,10 @@ class Bird(Sprite):
             self.y += self.velocity_y
 
             # Correct y position so the bird cannot go "out of bounds"
-            if self.y > self.y_max:
-                self.y = self.y_max
-            if self.y < 0:
-                self.y = 0
+            # if self.y > self.y_max:
+            #     self.y = self.y_max
+            # if self.y < 0:
+            #     self.y = 0
 
         # Every 5 frames, update the player bird by changing the wing flap
         if self.count % 5 == 0:
@@ -379,37 +388,37 @@ class GameText():
             x += DIGITS[i].get_width()
 
 
-    def update_level(self, keys_pressed):
-        """
-        Update the selected level.
+    # def update_level(self, keys_pressed):
+    #     """
+    #     Update the selected level.
+    #
+    #     Arguments:
+    #         keys_pressed
+    #
+    #     Returns:
+    #         int: the selected level, where [0,1,2] corresponds to
+    #         ['easy', 'medium', 'hard'], respectively.
+    #     """
+    #     if 'right_arrow' in keys_pressed:
+    #         if self.level == 2:
+    #             return self.level
+    #         self.level += 1
+    #
+    #     if 'left_arrow' in keys_pressed:
+    #         if self.level == 0:
+    #             return self.level
+    #         self.level -= 1
+    #
+    #     return self.level
 
-        Arguments:
-            keys_pressed
 
-        Returns:
-            int: the selected level, where [0,1,2] corresponds to 
-            ['easy', 'medium', 'hard'], respectively.
-        """
-        if 'right_arrow' in keys_pressed:
-            if self.level == 2:
-                return self.level
-            self.level += 1
-
-        if 'left_arrow' in keys_pressed:
-            if self.level == 0:
-                return self.level
-            self.level -= 1
-
-        return self.level
-
-
-    def update_score(self):
+    def update_score(self, amount):
         """
         Update the game score. 
         We call this function every time the bird makes it through a pair of 
         pipes, so we increment the score by 1.
         """
-        self.score += 1
+        self.score += amount
 
 
 
@@ -451,3 +460,156 @@ class Base(Sprite):
         This property is needed for pygame.sprite.collide_mask
         """
         return Rect(self.x, self.y, BASE.get_width(), BASE.get_height())
+
+
+
+class HeartBoosterGuage(Sprite):
+    def __init__(self, x, y):
+        self.image = pygame.image.load('games/flappybird/actual/Assets/heart.png')
+        self.image = pygame.transform.scale(self.image, (42, 42))
+
+        # Game surface
+        self.surface = pygame.display.get_surface()
+
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+        self.radius = 25
+        self.center = self.rect.centerx, self.rect.centery
+        self.active = False
+        self.max_timer = 300  # 5 seconds at 30 FPS
+        self.timer = 0
+
+    def collect(self):
+        self.active = True
+        self.timer = self.max_timer
+
+    def update(self):
+        if self.active:
+            self.timer -= 1
+            # if self.timer <= 0:
+            #     self.timer = 0
+            #     self.active = False
+
+
+    def draw(self):
+        if  self.active:
+
+            self.surface.blit(self.image, self.rect)
+            gas = int((self.timer / self.max_timer) * 360)
+
+            if gas > 0:
+                for i in range(gas):
+                    x = round(self.center[0] + self.radius * math.cos(i * math.pi / 180))
+                    y = round(self.center[1] + self.radius * math.sin(i * math.pi / 180))
+                    pygame.draw.circle(self.surface, WHITE, (x, y), 3)
+
+
+
+class Heart(Sprite):
+    def __init__(self, screen_size):
+        super().__init__()
+        self.image = pygame.image.load('games/flappybird/actual/Assets/heart.png')
+
+        # Scale the image
+        # width = int(original_image.get_width() )
+        # height = int(original_image.get_height() )
+        # self.image = pygame.transform.scale(original_image, (width, height))
+        self.image = pygame.transform.scale(self.image, (40, 40))
+
+        self.rect = self.image.get_rect()
+
+
+        self.screen_width, self.screen_height = screen_size
+        # Game surface
+        self.surface = pygame.display.get_surface()
+
+        self.x = -1
+        self.y = -1
+        self.spawn_delay = 300
+        self.rect.topleft = (-50, -50)
+
+        #self.spawn()
+
+    def spawn(self, pipes):
+        """Place heart randomly where it doesn't overlap pipes."""
+        #while True:
+        x = random.randint(100, self.screen_width - 50)
+        y = random.randint(50, self.screen_height - 200)
+        self.rect.topleft = (x, y)
+        print(x,y)
+        self.x = x
+        self.y = y
+
+            # Check overlap with pipes
+            # if not any(self.rect.colliderect(pipe) for pipe in pipes):
+            #     break
+
+    def draw(self):
+        #print("draw heart", self.rect.topleft)
+        self.surface.blit(self.image, self.rect)
+
+    def update(self):
+        """Move heart left. Respawn if it moves off-screen."""
+        self.rect.x -= 4#self.speed
+
+        self.x -= 4
+
+        # if self.rect.right < 0:
+        #     self.spawn()
+
+    def remove_(self):
+        self.rect.topleft = (-50, -50)
+
+class Coin(Sprite):
+    def __init__(self, screen_size):
+        super().__init__()
+        self.image = pygame.image.load('games/flappybird/actual/Assets/coin.png')
+
+
+        self.image = pygame.transform.scale(self.image, (30, 30))
+
+        self.rect = self.image.get_rect()
+
+        self.screen_width, self.screen_height = screen_size
+        # Game surface
+        self.surface = pygame.display.get_surface()
+
+        self.x = -1
+        self.y = -1
+        self.spawn_delay = 150
+        self.rect.topleft = (-50, -50)
+
+        # self.spawn()
+
+    def spawn(self, pipes):
+        """Place heart randomly where it doesn't overlap pipes."""
+        # while True:
+        x = random.randint(100, self.screen_width - 50)
+        y = random.randint(50, self.screen_height - 200)
+        self.rect.topleft = (x, y)
+        print(x, y)
+        self.x = x
+        self.y = y
+
+        # Check overlap with pipes
+        # if not any(self.rect.colliderect(pipe) for pipe in pipes):
+        #     break
+
+    def draw(self):
+        #print("draw coin", self.rect.topleft)
+        self.surface.blit(self.image, self.rect)
+
+    def update(self):
+        """Move heart left. Respawn if it moves off-screen."""
+        self.rect.x -= 4  # self.speed
+
+        self.x -= 4
+
+        # if self.rect.right < 0:
+        #     self.spawn()
+
+    def remove_(self):
+        self.rect.topleft = (-50, -50)
+

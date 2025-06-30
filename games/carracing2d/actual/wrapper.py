@@ -379,10 +379,8 @@ class Game():
         feul = []
         for f in self.fuel_group:
             feul.append({'yCoordinate': f.rect.y, 'xCoordinate': f.rect.x, 'type':f.type, 'width':f.rect.width, 'height':f.rect.height})
-            # print("\nfeul", f.rect.width, f.rect.height)
 
-        #allcoins = {'allcoins': self.left_bar.y, 'xCoordinate': self.left_bar.get_leftbar_xcoord()
-                #   }
+
         allassets = []
         allassets.extend(allcoins)
         allassets.extend(allobs)

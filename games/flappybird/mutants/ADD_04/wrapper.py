@@ -72,19 +72,31 @@ class Game():
         self.previous_action = 0
         self.previous_action_count = self.player.count
         self.block_action_counter = 0
+        self.pipe_pass = False
 
     # get game state information information
     def get_game_state(self):
-        flappyBird = {'yCoordinate': self.player.y, 'xCoordinate': self.player.x + self.player.image.get_width()}
-        topPipe = {'yCoordinate': self.pipes[0].y_upper_end - 3, 'xCoordinate': self.pipes[0].x}
-        bottomPipe = {'yCoordinate': self.pipes[0].y_upper_end + 173, 'xCoordinate': self.pipes[0].x}
+        flappyBird = {'yCoordinate': self.player.y, 'xCoordinate': self.player.x + self.player.image.get_width(), 'width':self.player.image.get_width(), 'hieght':self.player.image.get_height()}
+        topPipe = {'yCoordinate': self.pipes[0].y_upper_end, 'xCoordinate': self.pipes[0].x, 'isActive':True}
+        bottomPipe = {'yCoordinate': self.pipes[0].y_upper_end + 158, 'xCoordinate': self.pipes[0].x, 'isActive':True}
+        scoreupdate = {'pipe_pass': self.pipe_pass, 'coin':False, 'heart':False}
+        coin = {'yCoordinate': -1, 'xCoordinate': -1}
+        heart = {'yCoordinate': -1, 'xCoordinate':-1, 'timeElapsed': 0, 'isActive':False}
 
         game_state = {"flappyBird": flappyBird,
                       "topPipe": topPipe,
                       "bottomPipe": bottomPipe,
-                      "score": self.game_text.score
-
+                      "coin":coin,
+                      'heart':heart,
+                      "score": self.game_text.score,
+                      'scoreupdate': scoreupdate
                       }
+        # print("+++++++++++++++++++++")
+        # print("i here", self.pipe_pass)
+        # print("+++++++++++++++++++++")
+        # self.pipe_pass = False
+        # self.coin_collect = False
+        # self.heart_collect = False
 
         return game_state
 
@@ -198,6 +210,7 @@ class Game():
                     self.game_text.update_score()
                     self.pipe_counted[i] = True
                     reward = 1
+                    self.pipe_pass = True
 
         # Increment
         self.clock.tick(self.fps)

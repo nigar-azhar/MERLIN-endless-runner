@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*$py.class
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# macOS metadata
+.Spotlight-V100
+.Trashes
+
+# macOS volume info
+.VolumeIcon.icns
+
+# macOS Finder tags
+.fseventsd

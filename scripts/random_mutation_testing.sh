@@ -15,7 +15,7 @@ cd ..
 folder_names=$(find games/"$game_name"/mutants/* -type d -maxdepth 1 -exec basename {} \;)
 
 #export PYTHONPATH=D:/nigar/PHD/MERLIN/drl-experiments-clean
-for ((counter=31; counter<=31; counter++)); do
+for ((counter=1; counter<=30; counter++)); do
   echo "Run # '$counter'"
   # Use the folder names in a command
   for folder_name in $folder_names; do
@@ -23,7 +23,7 @@ for ((counter=31; counter<=31; counter++)); do
           #echo "Folder name is not 'pycache'"
           echo "Processing mutant: $folder_name"
           #echo "What"
-          python run.py --agent=random --mode=eval --exp_name=clean --game=$game_name --mutant=$folder_name
+          python run.py --agent=random --mode=eval --exp_name=clean --game=$game_name --mutant=$folder_name --tries=51
   #    else
   #        echo "Folder name is 'pycache'"
       fi
@@ -33,7 +33,7 @@ for ((counter=31; counter<=31; counter++)); do
   done
 
   # Name of the folder to be created
-  run_folder_name=mutation-testing-logs/random/"$game_name"/run_"$counter"
+  run_folder_name=logs/mutation-testing-logs/random/"$game_name"/run_"$counter"
 
   # Create the folder if it doesn't exist
   if [ ! -d "$run_folder_name" ]; then

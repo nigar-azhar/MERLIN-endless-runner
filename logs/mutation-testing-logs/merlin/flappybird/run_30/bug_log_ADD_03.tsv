@@ -1,2 +1,0 @@
-bug encountered	bird-inline-with-gap	flap()	 	 	 bird-inline-with-gap 	 {'yCoordinate': 212.4, 'xCoordinate': 91.6}	{'yCoordinate': 137.0, 'xCoordinate': 200}	{'yCoordinate': 313.0, 'xCoordinate': 200}	0	0	 Action did not perform as expected  
-validation satisfied	bird-inline-with-gap	any	(flappyBird.yCoordinate > (topPipe.yCoordinate + 0)) and (flappyBird.yCoordinate < (bottomPipe.yCoordinate-0))	bird-inline-with-gap	bird-inline-with-gap	{'yCoordinate': 212.4, 'xCoordinate': 91.6}	{'yCoordinate': 137.0, 'xCoordinate': 200}	{'yCoordinate': 313.0, 'xCoordinate': 200}	0	0 

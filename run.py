@@ -10,9 +10,8 @@ import argparse
 # warnings.filterwarnings("ignore")
 from MERLIN import MERLINAgent
 from randomagent import RandomAgent
+import ModelReader
 
-
-import importlib
 # import warnings
 #
 # # Suppress all warnings
@@ -27,7 +26,7 @@ parser.add_argument("--agent",
                     type=str,
                     help="agent name merlin or random",
                     default="merlin",
-                    choices=["merlin", "agent"])
+                    choices=["merlin", "random"])
 
 parser.add_argument("--mode",
                     type=str,
@@ -138,8 +137,8 @@ parser.add_argument("--frame_size",
 if __name__ == '__main__': 
     options = parser.parse_args()
 
-    ModelReader = importlib.import_module('games.{}.actual.ModelReader'.format(options.game))
-    options.n_actions, options.p_actions  = ModelReader.get_actions()
+    #ModelReader = importlib.import_module('games.{}.actual.ModelReader'.format(options.game))
+    options.n_actions, options.p_actions  = ModelReader.get_actions(options.game)#ModelReader.get_actions()
 
     if options.agent == "merlin":
         agent = MERLINAgent(options)

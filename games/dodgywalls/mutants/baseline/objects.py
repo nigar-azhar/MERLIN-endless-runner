@@ -129,23 +129,23 @@ class ScoreCard:
 		self.win.blit(self.image, self.rect)
 
 
-class Message:
-	def __init__(self, x, y, size, text, font, color, win):
-		self.win = win
-		if not font:
-			self.font = pygame.font.SysFont("Verdana", size)
-			anti_alias = True
-		else:
-			self.font = pygame.font.Font(font, size)
-			anti_alias = False
-		self.image = self.font.render(text, anti_alias, color)
-		self.rect = self.image.get_rect(center=(x,y))
-		self.shadow = self.font.render(text, anti_alias, (54,69,79))
-		self.shadow_rect = self.image.get_rect(center=(x+2,y+2))
-		
-	def update(self):
-		self.win.blit(self.shadow, self.shadow_rect)
-		self.win.blit(self.image, self.rect)
+# class Message:
+# 	def __init__(self, x, y, size, text, font, color, win):
+# 		self.win = win
+# 		if not font:
+# 			self.font = pygame.font.SysFont("Verdana", size)
+# 			anti_alias = True
+# 		else:
+# 			self.font = pygame.font.Font(font, size)
+# 			anti_alias = False
+# 		self.image = self.font.render(text, anti_alias, color)
+# 		self.rect = self.image.get_rect(center=(x,y))
+# 		self.shadow = self.font.render(text, anti_alias, (54,69,79))
+# 		self.shadow_rect = self.image.get_rect(center=(x+2,y+2))
+#
+# 	def update(self):
+# 		self.win.blit(self.shadow, self.shadow_rect)
+# 		self.win.blit(self.image, self.rect)
 
 
 class Particle(pygame.sprite.Sprite):
@@ -176,31 +176,31 @@ class Particle(pygame.sprite.Sprite):
 			self.kill()
 
 
-class Button(pygame.sprite.Sprite):
-	def __init__(self, img, scale, x, y):
-		super(Button, self).__init__()
-		
-		self.scale = scale
-		self.image = pygame.transform.scale(img, self.scale)
-		self.rect = self.image.get_rect()
-		self.rect.x = x
-		self.rect.y = y
-
-		self.clicked = False
-
-	def update_image(self, img):
-		self.image = pygame.transform.scale(img, self.scale)
-
-	def draw(self, win):
-		action = False
-		pos = pygame.mouse.get_pos()
-		if self.rect.collidepoint(pos):
-			if pygame.mouse.get_pressed()[0] and not self.clicked:
-				action = True
-				self.clicked = True
-
-			if not pygame.mouse.get_pressed()[0]:
-				self.clicked = False
-
-		win.blit(self.image, self.rect)
-		return action
+# class Button(pygame.sprite.Sprite):
+# 	def __init__(self, img, scale, x, y):
+# 		super(Button, self).__init__()
+#
+# 		self.scale = scale
+# 		self.image = pygame.transform.scale(img, self.scale)
+# 		self.rect = self.image.get_rect()
+# 		self.rect.x = x
+# 		self.rect.y = y
+#
+# 		self.clicked = False
+#
+# 	def update_image(self, img):
+# 		self.image = pygame.transform.scale(img, self.scale)
+#
+# 	def draw(self, win):
+# 		action = False
+# 		pos = pygame.mouse.get_pos()
+# 		if self.rect.collidepoint(pos):
+# 			if pygame.mouse.get_pressed()[0] and not self.clicked:
+# 				action = True
+# 				self.clicked = True
+#
+# 			if not pygame.mouse.get_pressed()[0]:
+# 				self.clicked = False
+#
+# 		win.blit(self.image, self.rect)
+# 		return action

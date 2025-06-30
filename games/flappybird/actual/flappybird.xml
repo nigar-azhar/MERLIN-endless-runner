@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modelClass>
+    <actions>
+        <key>-</key>
+        <name>doNothing()</name>
+        <timeelapsed>1</timeelapsed>
+        <effect>(previousflappyBird.yCoordinate + 1 &lt; flappyBird.yCoordinate) and (previousflappyBird.yCoordinate + 15 &gt; flappyBird.yCoordinate) </effect>
+        <frequency_of_use>0.95</frequency_of_use>
+        <positive_reward_impact>1</positive_reward_impact>
+    </actions>
+     <actions>
+        <key>-</key>
+        <name>flap()</name>
+        <timeelapsed>11</timeelapsed>
+        <effect>(previousflappyBird.yCoordinate - 35  &gt; flappyBird.yCoordinate) and (previousflappyBird.yCoordinate - 50 &lt; flappyBird.yCoordinate)</effect>
+        <frequency_of_use>0.05</frequency_of_use>
+         <positive_reward_impact>1</positive_reward_impact>
+    </actions>
+   <assets>
+        <multiplicity>*</multiplicity>
+        <name>topPipe</name>
+        <stereotype>DangerousObstacle</stereotype>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>xCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>yCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+       <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>isActive</name>
+            <string_value></string_value>
+            <boolean_value></boolean_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </assets>
+    <assets>
+        <multiplicity>*</multiplicity>
+        <name>bottomPipe</name>
+        <stereotype>DangerousObstacle</stereotype>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>xCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>yCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>isActive</name>
+            <string_value></string_value>
+            <boolean_value></boolean_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </assets>
+    <assets>
+        <multiplicity>1</multiplicity>
+        <name>flappyBird</name>
+        <stereotype>Avatar</stereotype>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>xCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>yCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>lifecount</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>direction</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </assets>
+    <assets>
+        <multiplicity>1</multiplicity>
+        <name>coin</name>
+        <stereotype>Collectable</stereotype>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>xCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>yCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value></float_value>
+            <name>effect</name>
+            <string_value>(previousScore+1 == score)</string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>1</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </assets>
+    <assets>
+        <multiplicity>*</multiplicity>
+        <name>heart</name>
+        <stereotype>Booster</stereotype>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>xCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>yCoordinate</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>300</float_value>
+            <name>boosterDuration</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>2</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>1.0</float_value>
+            <name>effect</name>
+            <string_value>(not topPipe.isActive and not bottomPipe.isActive)</string_value>
+            <type>numeric</type>
+
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>0.0</float_value>
+            <name>isActive</name>
+            <string_value></string_value>
+            <boolean_value></boolean_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </assets>
+    <rewards>
+        <multiplicity>1</multiplicity>
+        <name>pipe_pass</name>
+        <stereotype>Reward</stereotype>
+        <stereotype_attributes>
+            <float_value>1.0</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value></float_value>
+            <name>effect</name>
+            <string_value>(previousScore + 1 == score)</string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </rewards>
+    <name>FlappyBirdGame</name>
+    <statemachine>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>init</name>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <sourceName>init</sourceName>
+                <targetName>init-choice</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>pseudostate</statetype>
+        </allmystates>
+        <allmystates>
+            <constraint>((not heart.isActive) and flappyBird.yCoordinate &gt; (topPipe.yCoordinate)) and (flappyBird.yCoordinate  &lt; (bottomPipe.yCoordinate))</constraint>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-inline-with-gap</name>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; topPipe.yCoordinate) and (flappyBird.yCoordinate + flappyBird.height  &lt; bottomPipe.yCoordinate)</guard>
+                <name></name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-inline-with-gap</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &lt;= (topPipe.yCoordinate + 0)) and ((flappyBird.xCoordinate &lt;= (topPipe.xCoordinate - 0)) or (flappyBird.xCoordinate  &gt;= (topPipe.xCoordinate + 52)) )</guard>
+                <name>flap()</name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-inline-with-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate + flappyBird.hieght &gt;= bottomPipe.yCoordinate) and ((flappyBird.xCoordinate &lt;= bottomPipe.xCoordinate) or (flappyBird.xCoordinate  &gt;= bottomPipe.xCoordinate + 52)) and (flappyBird.yCoordinate + flappyBird.hieght &lt; 400)</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-inline-with-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and flappyBird.yCoordinate &lt;= 5</guard>
+                <name>flap()</name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-touch-top-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and flappyBird.yCoordinate + flappyBird.hieght &gt;= 400</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-touch-bottom-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.xCoordinate + flappyBird.width &gt;= (topPipe.xCoordinate - 0) and flappyBird.xCoordinate &lt;= (topPipe.xCoordinate + 52) ) and (flappyBird.yCoordinate &lt;= topPipe.yCoordinate + 0)</guard>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-touch-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate  &gt;= (bottomPipe.yCoordinate)) and (flappyBird.xCoordinate + flappyBird.width >= (bottomPipe.xCoordinate - 0))  and (flappyBird.xCoordinate &lt;= (bottomPipe.xCoordinate + 52) and flappyBird.xCoordinate &gt;= (bottomPipe.xCoordinate))</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-touch-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((heart.isActive) and (not bottomPipe.isActive) and (not topPipe.isActive) and (flappyBird.yCoordinate &gt; 5) and flappyBird.yCoordinate &lt; 400)</guard>
+                <name></name>
+                <sourceName>bird-inline-with-gap</sourceName>
+                <targetName>bird-is-safe</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>good</stereotype>
+        </allmystates>
+
+        <allmystates>
+            <constraint>((heart.isActive) and (not bottomPipe.isActive) and (not topPipe.isActive) and (flappyBird.yCoordinate &gt; 5) and flappyBird.yCoordinate &lt; 400)</constraint>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-is-safe</name>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard>((heart.isActive) and (not bottomPipe.isActive) and (not topPipe.isActive) and (flappyBird.yCoordinate &gt; 5) and flappyBird.yCoordinate &lt; 400)</guard>
+                <name></name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-is-safe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; (topPipe.yCoordinate)) and (flappyBird.yCoordinate  &lt; (bottomPipe.yCoordinate))</guard>
+                <name></name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-inline-with-gap</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &lt;= (topPipe.yCoordinate + 0)) and ((flappyBird.xCoordinate &lt;= (topPipe.xCoordinate - 0)) or (flappyBird.xCoordinate  &gt;= (topPipe.xCoordinate + 52)))</guard>
+                <name></name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-inline-with-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate + flappyBird.hieght &gt;= bottomPipe.yCoordinate) and ((flappyBird.xCoordinate &lt;= bottomPipe.xCoordinate) or (flappyBird.xCoordinate  &gt;= bottomPipe.xCoordinate + 52)) and (flappyBird.yCoordinate + flappyBird.hieght &lt; 400)</guard>
+                <name></name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-inline-with-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>flappyBird.yCoordinate &lt;= 5</guard>
+                <name>flap()</name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-touch-top-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>flappyBird.yCoordinate + flappyBird.hieght &gt;= 400</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-touch-bottom-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.xCoordinate + flappyBird.width &gt;= (topPipe.xCoordinate - 0) and flappyBird.xCoordinate &lt;= (topPipe.xCoordinate + 52) ) and (flappyBird.yCoordinate &lt;= topPipe.yCoordinate + 0)</guard>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-touch-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt;= (bottomPipe.yCoordinate-0)) and (flappyBird.xCoordinate + flappyBird.width >= (bottomPipe.xCoordinate - 0))  and (flappyBird.xCoordinate &lt;= (bottomPipe.xCoordinate + 52) and flappyBird.xCoordinate &gt;= (bottomPipe.xCoordinate))</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-is-safe</sourceName>
+                <targetName>bird-touch-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype></stereotype>
+        </allmystates>
+
+
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-inline-with-top-pipe</name>
+            <constraint>((not heart.isActive) and  flappyBird.yCoordinate &lt;= (topPipe.yCoordinate + 0)) and ((flappyBird.xCoordinate &lt;= (topPipe.xCoordinate - 0)) or (flappyBird.xCoordinate  &gt;= (topPipe.xCoordinate + 52)))</constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard>flappyBird.yCoordinate &lt;= 5</guard>
+                <name>flap()</name>
+                <sourceName>bird-inline-with-top-pipe</sourceName>
+                <targetName>bird-touch-top-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; (topPipe.yCoordinate)) and (flappyBird.yCoordinate  &lt; (bottomPipe.yCoordinate))</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-inline-with-top-pipe</sourceName>
+                <targetName>bird-inline-with-gap</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate &lt;= (topPipe.yCoordinate + 0)) and ((flappyBird.xCoordinate &lt;= (topPipe.xCoordinate - 0)) or (flappyBird.xCoordinate  &gt;= (topPipe.xCoordinate + 52)))</guard>
+                <sourceName>bird-inline-with-top-pipe</sourceName>
+                <targetName>bird-inline-with-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.xCoordinate + flappyBird.width &gt;= (topPipe.xCoordinate - 0) and flappyBird.xCoordinate &lt;= (topPipe.xCoordinate + 52) ) and (flappyBird.yCoordinate &lt;= topPipe.yCoordinate + 0)</guard>
+                <sourceName>bird-inline-with-top-pipe</sourceName>
+                <targetName>bird-touch-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((heart.isActive) and (not bottomPipe.isActive) and (not topPipe.isActive) and (flappyBird.yCoordinate &gt; 5) and flappyBird.yCoordinate &lt; 400)</guard>
+                <name></name>
+                <sourceName>bird-inline-with-top-pipe</sourceName>
+                <targetName>bird-is-safe</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>bad</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-inline-with-bottom-pipe</name>
+            <constraint>(not heart.isActive) and (flappyBird.yCoordinate + flappyBird.hieght &gt;= bottomPipe.yCoordinate) and ((flappyBird.xCoordinate &lt;= bottomPipe.xCoordinate) or (flappyBird.xCoordinate  &gt;= bottomPipe.xCoordinate + 52)) and (flappyBird.yCoordinate + flappyBird.hieght &lt; 400) </constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard>flappyBird.yCoordinate + flappyBird.hieght &gt;= 400</guard>
+                <name>doNothing()</name>
+                <sourceName>bird-inline-with-bottom-pipe</sourceName>
+                <targetName>bird-touch-bottom-border</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; (topPipe.yCoordinate)) and (flappyBird.yCoordinate  &lt; (bottomPipe.yCoordinate))</guard>
+                <name>flap()</name>
+                <sourceName>bird-inline-with-bottom-pipe</sourceName>
+                <targetName>bird-inline-with-gap</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate &gt;= (bottomPipe.yCoordinate-0)) and (flappyBird.xCoordinate + flappyBird.width  >= (bottomPipe.xCoordinate - 0))  and (flappyBird.xCoordinate &lt;= (bottomPipe.xCoordinate + 52) and flappyBird.xCoordinate &gt;= (bottomPipe.xCoordinate))</guard>
+                <sourceName>bird-inline-with-bottom-pipe</sourceName>
+                <targetName>bird-touch-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>(not heart.isActive) and (flappyBird.yCoordinate + flappyBird.hieght &gt;= bottomPipe.yCoordinate) and ((flappyBird.xCoordinate &lt;= bottomPipe.xCoordinate) or (flappyBird.xCoordinate  &gt;= bottomPipe.xCoordinate + 52)) and (flappyBird.yCoordinate + flappyBird.hieght &lt; 400)</guard>
+                <sourceName>bird-inline-with-bottom-pipe</sourceName>
+                <targetName>bird-inline-with-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <guard>((heart.isActive) and (not bottomPipe.isActive) and (not topPipe.isActive) and (flappyBird.yCoordinate &gt; 5) and flappyBird.yCoordinate &lt; 400)</guard>
+                <name></name>
+                <sourceName>bird-inline-with-bottom-pipe</sourceName>
+                <targetName>bird-is-safe</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>bad</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-touch-top-border</name>
+            <constraint>(flappyBird.yCoordinate &lt; 5) </constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard></guard>
+                <sourceName>bird-touch-top-border</sourceName>
+                <targetName>final</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>dead</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-touch-bottom-pipe</name>
+            <constraint>(not heart.isActive) and (flappyBird.yCoordinate  &gt;= (bottomPipe.yCoordinate-0)) and (flappyBird.xCoordinate + flappyBird.width >= (bottomPipe.xCoordinate - 0))  and (flappyBird.xCoordinate &lt;= (bottomPipe.xCoordinate + 52) and flappyBird.xCoordinate &gt;= (bottomPipe.xCoordinate)) </constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard></guard>
+                <sourceName>bird-touch-bottom-pipe</sourceName>
+                <targetName>final</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>dead</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-touch-top-pipe</name>
+            <constraint>(not heart.isActive) and (flappyBird.yCoordinate &lt; (topPipe.yCoordinate+0))and (flappyBird.xCoordinate + flappyBird.width > (topPipe.xCoordinate - 0) and (flappyBird.xCoordinate &lt; (topPipe.xCoordinate + 52)))</constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard></guard>
+                <sourceName>bird-touch-top-pipe</sourceName>
+                <targetName>final</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>dead</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>bird-touch-bottom-border</name>
+            <constraint>(flappyBird.yCoordinate + flappyBird.hieght &gt;= 400) </constraint>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <guard></guard>
+                <sourceName>bird-touch-bottom-border</sourceName>
+                <targetName>final</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>state</statetype>
+            <stereotype>dead</stereotype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>init-choice</name>
+            <numberofregions>0</numberofregions>
+            <outgoingTransitions>
+                <sourceName>init-choice</sourceName>
+                <targetName>bird-inline-with-top-pipe</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <sourceName>init-choice</sourceName>
+                <targetName>bird-inline-with-gap</targetName>
+            </outgoingTransitions>
+            <outgoingTransitions>
+                <sourceName>init-choice</sourceName>
+                <targetName>bird-inline-with-bottom-pipe</targetName>
+            </outgoingTransitions>
+            <region>Region1</region>
+            <statetype>pseudostate</statetype>
+        </allmystates>
+        <allmystates>
+            <goesToFinal>false</goesToFinal>
+            <name>final</name>
+            <numberofregions>0</numberofregions>
+            <region>Region1</region>
+            <statetype>finalstate</statetype>
+        </allmystates>
+
+        <parent>FlappyBirdGame</parent>
+    </statemachine>
+    <stereotype>Game</stereotype>
+    <stereotype_attributes>
+        <float_value>0.0</float_value>
+        <name>score</name>
+        <string_value></string_value>
+        <type>numeric</type>
+        <update_capacity>1</update_capacity>
+    </stereotype_attributes>
+    <stereotype_attributes>
+        <float_value>0.0</float_value>
+        <name>timeelapsed</name>
+        <string_value></string_value>
+        <type>numeric</type>
+    </stereotype_attributes>
+</modelClass>

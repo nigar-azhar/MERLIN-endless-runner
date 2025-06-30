@@ -128,6 +128,8 @@ class Game():
         self.win.fill(BLACK)
         self.distance = 0
         self.score = 0
+        self.milestone = False
+        self.milestone_2 = False
 
     # FUNCTIONS *******************************************************************
     # def center(self,image):
@@ -306,6 +308,34 @@ class Game():
             self.close_game()
             self.__init__(self.frame_size)
             reward = - 10
+
+        # milestones
+        if self.score > 10:
+            self.milestone = True
+
+        if self.score > 20:
+            self.milestone = True
+
+        if self.feul_score_flag and self.score > 10:
+            self.milestone = True
+
+        if self.coins > 5 :
+            self.milestone = True
+
+        if self.coin_score_flag and self.coins > 3:
+            self.milestone = True
+
+        if pygame.time.get_ticks() > self.FPS * 250:
+            self.milestone_2 = True
+
+        if pygame.time.get_ticks() > self.FPS * 500:
+            self.milestone_2 = True
+
+        if self.milestone:
+            print("score miles stone achieved")
+
+        if self.milestone:
+            print("score miles stone achieved")
         return frame, reward, done
 
 

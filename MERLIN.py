@@ -10,6 +10,10 @@ import torch
 from tensorboardX import SummaryWriter
 import importlib
 
+import ModelReader
+from rewardEstimator import RewardEstimator
+from Validator import Validator
+
 # Global parameter which tells us if we have detected a CUDA capable device
 CUDA_DEVICE = torch.cuda.is_available()
 print(">>>>>>>>>>CUDA_DEVICE", CUDA_DEVICE)
@@ -262,9 +266,9 @@ class MERLINAgent:
         """
 
         Wrapper = importlib.import_module('games.{}.actual.wrapper'.format(gamename))
-        RewardEstimatorModule = importlib.import_module('games.{}.actual.rewardEstimator'.format(gamename))
-        ModelReaderModule = importlib.import_module('games.{}.actual.ModelReader'.format(gamename))
-        action_time = ModelReaderModule.get_action_timeelapsed()
+        #RewardEstimatorModule = importlib.import_module('games.{}.actual.rewardEstimator'.format(gamename))
+        #ModelReaderModule = importlib.import_module('games.{}.actual.ModelReader'.format(gamename))
+        action_time = ModelReader.get_action_timeelapsed(gamename)#ModelReaderModule.get_action_timeelapsed()
 
         folder_path = "trained-weights/"+self.opt.game+"/"+self.opt.exp_name
 
@@ -291,7 +295,7 @@ class MERLINAgent:
         if isinstance(score, dict):
             # print("score is of type 'dict'")
             score = game_sate['score']['score']
-        rewarder = RewardEstimatorModule.RewardEstimator(game_sate)
+        rewarder = RewardEstimator(game_sate, gamename)#RewardEstimatorModule.RewardEstimator(game_sate)
 
         # Start a training episode
         eplen_sum = 0
@@ -358,7 +362,7 @@ class MERLINAgent:
                     frame, reward, done = self.game.step(0)
                 state = torch.cat([frame for i in range(self.opt.len_agent_history)])
                 game_sate = self.game.get_game_state()
-                rewarder = RewardEstimatorModule.RewardEstimator(game_sate)
+                rewarder = RewardEstimator(game_sate, gamename)#rewarder = RewardEstimatorModule.RewardEstimator(game_sate)
 
             if score >= 200 or eplen >=10000:
                 f = open("trained-weights/"+self.opt.game+"/"+self.opt.exp_name + "/log.txt", "a")
@@ -375,7 +379,7 @@ class MERLINAgent:
                     frame, reward, done = self.game.step(0)
                 state = torch.cat([frame for i in range(self.opt.len_agent_history)])
                 game_sate = self.game.get_game_state()
-                rewarder = RewardEstimatorModule.RewardEstimator(game_sate)
+                rewarder = RewardEstimator(game_sate, gamename)#rewarder = RewardEstimatorModule.RewardEstimator(game_sate)
 
         torch.save(self.net.state_dict(), f'trained-weights/{self.opt.game}/{self.opt.exp_name}/{str(i).zfill(7)}.pt')
         f = open("trained-weights/"+self.opt.game+"/"+self.opt.exp_name+"/log.txt", "a")
@@ -390,9 +394,9 @@ class MERLINAgent:
         Play Flappy Bird using the trained network.
         """
         Wrapper = importlib.import_module('games.{}.mutants.{}.wrapper'.format(gamename, mutantname))
-        ValidatorModule = importlib.import_module('games.{}.actual.Validator'.format(gamename))
-        ModelReaderModule = importlib.import_module('games.{}.actual.ModelReader'.format(gamename))
-        action_time = ModelReaderModule.get_action_timeelapsed()
+        #ValidatorModule = importlib.import_module('games.{}.actual.Validator'.format(gamename))
+        #ModelReaderModule = importlib.import_module('games.{}.actual.ModelReader'.format(gamename))
+        action_time = ModelReader.get_action_timeelapsed(gamename)
         #print("\n\n>>>>>>>",action_time,"\n\n")
         print(
             "\nEvaluating the mutant " + mutantname + " of game " + gamename + " using the weights in " + self.opt.weights_dir + "\n")
@@ -401,7 +405,7 @@ class MERLINAgent:
             tries = 10
         current_try = 0
         mutant_killed = False
-        while not mutant_killed and current_try<tries:
+        while (not mutant_killed ) and current_try<tries:#or not (mutantname == "complex")
             current_try +=1
             print("\n\n>>>>>>>>>>> Try", current_try)
             # The flappy bird game instance
@@ -417,7 +421,7 @@ class MERLINAgent:
                 state = torch.cat([frame for i in range(self.opt.len_agent_history)])
                 game_sate = self.game.get_game_state()
                 #print("\n\n\n>>>>>>>>>> Validator reinitialized")
-                validator = ValidatorModule.Validator( self.opt.exp_name, game_sate)
+                validator = Validator( self.opt.exp_name, game_sate,gamename)
                 validator.mutant_name = mutantname#'IRP_DSU_01'#self.opt.mutant
                 validator.algo = "merlin"
                 # Start playing
@@ -460,7 +464,7 @@ class MERLINAgent:
                             break
 
                     game_sate = self.game.get_game_state()
-                    mutant_killed = validator.validate(game_sate,action, done)
+                    mutant_killed, bugs = validator.validate(game_sate,action, done)
                     score = game_sate['score']
                     if isinstance(score, dict):
                         # print("score is of type 'dict'")
@@ -475,17 +479,19 @@ class MERLINAgent:
 
                     ep_len +=1
 
+                    mutant_killed = is_bug_relevant(mutantname, bugs, mutant_killed, gamename=gamename)
+
                     # If we lost, exit
                     if done:
                         self.game.close_game()
                         break
-                    elif score >= 250:
+                    elif score >= 200:
                         self.game.close_game()
                         break
                     elif self.opt.mutant != "" and score>self.opt.score:
                         self.game.close_game()
                         break
-                    elif mutant_killed:
+                    elif mutant_killed:# and not (mutantname == "complex"):
                        self.game.close_game()
                        print("\n\n######### mutant killed\n\n")
                        break
@@ -498,3 +504,43 @@ class MERLINAgent:
                 f.write(mutantname + ", " + (
                     "mutant killed" if mutant_killed else "alive") + ", \n")
                 f.close()
+
+def is_bug_relevant(mutant_name, bugs, mutantkilled, gamename="dodgywalls"):
+    # Extract mutant type and ID
+    parts = mutant_name.split("_")
+    if len(parts) != 2:
+        return False  # Invalid format or baseline
+
+    prefix, _ = parts
+
+    if mutant_name in ["DCD_05", "DCD_06"] and gamename == "flappybird":
+        return 1 in bugs
+    elif mutant_name in ["GFA_01"] and gamename == "flappybird":
+        return 3 in bugs
+    elif parts[0] in ["DCD"] and gamename != "flappybird":
+        return mutantkilled
+
+    # Mapping of mutant type to bug ID
+    bug_map = {
+
+        "RUSD": 1,  # reward based
+        "RUOR": 1,  # reward based
+        "RUAR": 1,  # reward based
+        "DCD": 2,  # collision bug
+        "DAL": 3,   # action
+        "ARR": 3,   # action
+        "ADD": 3,   # action
+        "AVD": 3,   # action
+        "AVI": 3,   # action
+        "GFR": 4,  # freeze mutant
+        "GFT": 4,  # freeze mutant
+        "GFA": 4,  # freeze mutant
+    }
+
+    expected_bug_id = bug_map.get(prefix)
+    # print(expected_bug_id in bugs, expected_bug_id, bugs)
+    if expected_bug_id is None:
+        return False  # Unknown mutant type
+
+    # print (expected_bug_id in bugs,expected_bug_id, bugs )
+    return expected_bug_id in bugs

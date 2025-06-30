@@ -33,6 +33,9 @@ class Game():
 
         pygame.init()
 
+        self.milestone = False
+        self.milestone_2 = False
+
         # Frame rate of the game
         # if drl_mode
         self.fps = 45#100
@@ -192,12 +195,12 @@ class Game():
             self.redBallPresent_left = False
             self.redBallPresent_right = False
 
-        else:
-
-            self.redBallPresent_left = False
-            self.redBallPresent_right = False
-            self.whiteBallPresent_left = False
-            self.whiteBallPresent_right = False
+        # else:
+        #
+        #     self.redBallPresent_left = False
+        #     self.redBallPresent_right = False
+        #     self.whiteBallPresent_left = False
+        #     self.whiteBallPresent_right = False
 
         self.ball_score = False
         self.bar_score = False
@@ -288,12 +291,12 @@ class Game():
                 self.redBallPresent_left_next = False
                 self.redBallPresent_right_next = False
 
-            else:
-
-                self.redBallPresent_left_next = False
-                self.redBallPresent_right_next = False
-                self.whiteBallPresent_left_next = False
-                self.whiteBallPresent_right_next = False
+            # else:
+            #
+            #     self.redBallPresent_left_next = False
+            #     self.redBallPresent_right_next = False
+            #     self.whiteBallPresent_left_next = False
+            #     self.whiteBallPresent_right_next = False
 
             self.ball_next = ball
 
@@ -505,6 +508,28 @@ class Game():
         if done:
             self.close_game()
             self.__init__(self.frame_size)
+
+        # milestones
+        if self.score > 10:
+            self.milestone = True
+
+        if self.score > 20:
+            self.milestone = True
+
+        if self.score > 15:
+            self.milestone = True
+
+        if pygame.time.get_ticks() > self.fps * 150:
+            self.milestone_2 = True
+
+        if pygame.time.get_ticks() > self.fps * 200:
+            self.milestone_2 = True
+
+        if self.milestone:
+            print("score miles stone achieved")
+
+        if self.milestone_2:
+            print("time miles stone achieved")
 
         return frame, reward, done
 

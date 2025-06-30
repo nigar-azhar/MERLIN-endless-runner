@@ -4,7 +4,7 @@
         <key>-</key>
         <name>noop()</name>
         <timeelapsed>1</timeelapsed>
-        <effect>player['nitro_on'] == False and (previousPlayer['xCoordinate'] == player['xCoordinate'])</effect>
+        <effect>player['nitro_on'] == False and (previousplayer['xCoordinate'] == player['xCoordinate'])</effect>
         <frequency_of_use>0.4</frequency_of_use>
         <positive_reward_impact>0.3</positive_reward_impact>
     </actions>
@@ -12,7 +12,7 @@
         <key>LEFT_ARROW</key>
         <name>left()</name>
         <timeelapsed>1.0</timeelapsed>
-        <effect>player['nitro_on'] == False and (((previousPlayer['xCoordinate'] - 4  &gt;= player['xCoordinate']) and (previousPlayer['xCoordinate'] - 6 &lt;= player['xCoordinate']) and player['xCoordinate']>40) or (player['xCoordinate']==40))  and (previousPlayer['yCoordinate'] == player['yCoordinate'])</effect>
+        <effect>player['nitro_on'] == False and (((previousplayer['xCoordinate'] - 4  &gt;= player['xCoordinate']) and (previousplayer['xCoordinate'] - 6 &lt;= player['xCoordinate']) and player['xCoordinate']>40) or (player['xCoordinate']==40))  and (previousplayer['yCoordinate'] == player['yCoordinate'])</effect>
         <frequency_of_use>0.2</frequency_of_use>
         <positive_reward_impact>1</positive_reward_impact>
     </actions>
@@ -20,7 +20,7 @@
         <key>RIGHT_ARROW</key>
         <name>right()</name>
         <timeelapsed>1.0</timeelapsed>
-        <effect>player['nitro_on'] == False and (((previousPlayer['xCoordinate'] + 4  &lt;= player['xCoordinate']) and (previousPlayer['xCoordinate'] + 6 &gt;= player['xCoordinate']) and player['xCoordinate']+player['width']&lt;250) or (player['xCoordinate']+player['width']==250))  and (previousPlayer['yCoordinate'] == player['yCoordinate'])</effect>
+        <effect>player['nitro_on'] == False and (((previousplayer['xCoordinate'] + 4  &lt;= player['xCoordinate']) and (previousplayer['xCoordinate'] + 6 &gt;= player['xCoordinate']) and player['xCoordinate']+player['width']&lt;250) or (player['xCoordinate']+player['width']==250))  and (previousplayer['yCoordinate'] == player['yCoordinate'])</effect>
         <frequency_of_use>0.2</frequency_of_use>
         <positive_reward_impact>1</positive_reward_impact>
     </actions>
@@ -28,7 +28,7 @@
         <key>N</key>
         <name>nito_on()</name>
         <timeelapsed>1</timeelapsed>
-        <effect>(player['nitro_on'] and previousPlayer['nitro']>0) or (player['nitro_on']== False and previousPlayer['nitro']&lt;=0)</effect>
+        <effect>(player['nitro_on'] and previousplayer['nitro']>0) or (player['nitro_on']== False and previousplayer['nitro']&lt;=0)</effect>
         <frequency_of_use>0.1</frequency_of_use>
         <positive_reward_impact>1</positive_reward_impact>
     </actions>
@@ -37,7 +37,7 @@
         <key>LEFT_ARROW</key>
         <name>nitro_left()</name>
         <timeelapsed>1.0</timeelapsed>
-        <effect>((player['nitro_on'] and previousPlayer['nitro']>0) or (player['nitro_on']== False and previousPlayer['nitro']&lt;=0)) and (((previousPlayer['xCoordinate'] - 4  &gt;= player['xCoordinate']) and (previousPlayer['xCoordinate'] - 6 &lt;= player['xCoordinate']) and player['xCoordinate']>40) or (player['xCoordinate']==40))  and (previousPlayer['yCoordinate'] == player['yCoordinate'])</effect>
+        <effect>((player['nitro_on'] and previousplayer['nitro']>0) or (player['nitro_on']== False and previousplayer['nitro']&lt;=0)) and (((previousplayer['xCoordinate'] - 4  &gt;= player['xCoordinate']) and (previousplayer['xCoordinate'] - 6 &lt;= player['xCoordinate']) and player['xCoordinate']>40) or (player['xCoordinate']==40))  and (previousplayer['yCoordinate'] == player['yCoordinate'])</effect>
         <frequency_of_use>0.05</frequency_of_use>
         <positive_reward_impact>1</positive_reward_impact>
     </actions>
@@ -46,7 +46,7 @@
         <key>RIGHT_ARROW</key>
         <name>nitro_right()</name>
         <timeelapsed>1.0</timeelapsed>
-        <effect>((player['nitro_on'] and previousPlayer['nitro']>0) or (player['nitro_on']== False and previousPlayer['nitro']&lt;=0)) and (((previousPlayer['xCoordinate'] + 4  &lt;= player['xCoordinate']) and (previousPlayer['xCoordinate'] + 6 &gt;= player['xCoordinate']) and player['xCoordinate']+player['width']&lt;250) or (player['xCoordinate']+player['width']==250))  and (previousPlayer['yCoordinate'] == player['yCoordinate'])</effect>
+        <effect>((player['nitro_on'] and previousplayer['nitro']>0) or (player['nitro_on']== False and previousplayer['nitro']&lt;=0)) and (((previousplayer['xCoordinate'] + 4  &lt;= player['xCoordinate']) and (previousplayer['xCoordinate'] + 6 &gt;= player['xCoordinate']) and player['xCoordinate']+player['width']&lt;250) or (player['xCoordinate']+player['width']==250))  and (previousplayer['yCoordinate'] == player['yCoordinate'])</effect>
         <frequency_of_use>0.05</frequency_of_use>
         <positive_reward_impact>1</positive_reward_impact>
     </actions>
@@ -136,21 +136,21 @@
             <type>numeric</type>
         </stereotype_attributes>
         <stereotype_attributes>
-            <float_value>-1000.0</float_value>
-            <name>fileLocation</name>
-            <string_value></string_value>
-            <type>string</type>
-        </stereotype_attributes>
-        <stereotype_attributes>
-            <float_value>1.0</float_value>
+            <float_value></float_value>
             <name>effect</name>
             <string_value>(previousScore['coincount']+1 == score['coincount'])</string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value>2.0</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
             <type>numeric</type>
         </stereotype_attributes>
     </assets>
     <assets>
         <multiplicity>*</multiplicity>
-        <name>fuel</name>
+        <name>feul</name>
         <stereotype>Booster</stereotype>
         <stereotype_attributes>
             <float_value>0.0</float_value>
@@ -165,13 +165,7 @@
             <type>numeric</type>
         </stereotype_attributes>
         <stereotype_attributes>
-            <float_value>-1000.0</float_value>
-            <name>fileLocation</name>
-            <string_value></string_value>
-            <type>string</type>
-        </stereotype_attributes>
-        <stereotype_attributes>
-            <float_value>1.0</float_value>
+            <float_value>5</float_value>
             <name>scoreImpact</name>
             <string_value></string_value>
             <type>numeric</type>
@@ -179,10 +173,27 @@
         <stereotype_attributes>
             <float_value>1.0</float_value>
             <name>effect</name>
-            <string_value>(previousScore['fuel']+25 == score['fuel'])</string_value>
+            <string_value>(previousScore['feul']+25 == score['feul'])</string_value>
             <type>numeric</type>
         </stereotype_attributes>
     </assets>
+    <rewards>
+        <multiplicity>1</multiplicity>
+        <name>car_dodge</name>
+        <stereotype>Reward</stereotype>
+        <stereotype_attributes>
+            <float_value>1.0</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value></float_value>
+            <name>effect</name>
+            <string_value>(previousScore['car_dodge']+1 == score['feul'])</string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </rewards>
     <assets>
         <multiplicity>1</multiplicity>
         <name>player</name>
@@ -262,9 +273,9 @@
                 <targetName>car-touch-obstacle</targetName>
             </outgoingTransitions>
             <outgoingTransitions>
-                <guard> score['fuel']&lt;=0</guard>
+                <guard> score['feul']&lt;=0</guard>
                 <sourceName>car-in-safe-lane</sourceName>
-                <targetName>out-of-fuel</targetName>
+                <targetName>out-of-feul</targetName>
             </outgoingTransitions>
             <region>Region1</region>
             <statetype>state</statetype>
@@ -301,9 +312,9 @@
                 <targetName>car-touch-obstacle</targetName>
             </outgoingTransitions>
             <outgoingTransitions>
-                <guard> score['fuel']&lt;=0</guard>
+                <guard> score['feul']&lt;=0</guard>
                 <sourceName>car-inline-with-collectable</sourceName>
-                <targetName>out-of-fuel</targetName>
+                <targetName>out-of-feul</targetName>
             </outgoingTransitions>
             <region>Region1</region>
             <statetype>state</statetype>
@@ -340,9 +351,9 @@
                 <targetName>car-touch-obstacle</targetName>
             </outgoingTransitions>
             <outgoingTransitions>
-                <guard> score['fuel']&lt;=0</guard>
+                <guard> score['feul']&lt;=0</guard>
                 <sourceName>>car-touch-collectable</sourceName>
-                <targetName>out-of-fuel</targetName>
+                <targetName>out-of-feul</targetName>
             </outgoingTransitions>
             <region>Region1</region>
             <statetype>state</statetype>
@@ -379,9 +390,9 @@
                 <targetName>car-touch-obstacle</targetName>
             </outgoingTransitions>
             <outgoingTransitions>
-                <guard> score['fuel']&lt;=0</guard>
+                <guard> score['feul']&lt;=0</guard>
                 <sourceName>car-inline-with-obstacle</sourceName>
-                <targetName>out-of-fuel</targetName>
+                <targetName>out-of-feul</targetName>
             </outgoingTransitions>
             <region>Region1</region>
             <statetype>state</statetype>
@@ -403,12 +414,12 @@
         </allmystates>
         <allmystates>
             <goesToFinal>false</goesToFinal>
-            <name>out-of-fuel</name>
-            <constraint> score['fuel']&lt;=0</constraint>
+            <name>out-of-feul</name>
+            <constraint> score['feul']&lt;=0</constraint>
             <numberofregions>0</numberofregions>
             <outgoingTransitions>
                 <guard></guard>
-                <sourceName>out-of-fuel</sourceName>
+                <sourceName>out-of-feul</sourceName>
                 <targetName>final</targetName>
             </outgoingTransitions>
             <region>Region1</region>

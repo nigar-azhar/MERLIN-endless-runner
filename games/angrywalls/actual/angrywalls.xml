@@ -175,7 +175,7 @@
             </stereotype_attribute>
         </stereotype_attributes>
         <multiplicity>*</multiplicity>
-        <name>WhiteBall</name>
+        <name>ball</name>
         <stereotype>Collectable</stereotype>
         <stereotype_attributes>
             <float_value>0.0</float_value>
@@ -190,13 +190,7 @@
             <type>numeric</type>
         </stereotype_attributes>
         <stereotype_attributes>
-            <float_value>-1000.0</float_value>
-            <name>fileLocation</name>
-            <string_value></string_value>
-            <type>string</type>
-        </stereotype_attributes>
-        <stereotype_attributes>
-            <float_value>1.0</float_value>
+            <float_value>5.0</float_value>
             <name>scoreImpact</name>
             <string_value></string_value>
             <type>numeric</type>
@@ -269,6 +263,23 @@
             <type>numeric</type>
         </stereotype_attributes>
     </assets>
+    <rewards>
+        <multiplicity>1</multiplicity>
+        <name>bar</name>
+        <stereotype>Reward</stereotype>
+        <stereotype_attributes>
+            <float_value>1.0</float_value>
+            <name>scoreImpact</name>
+            <string_value></string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+        <stereotype_attributes>
+            <float_value></float_value>
+            <name>effect</name>
+            <string_value>(previousScore + 1 == score)</string_value>
+            <type>numeric</type>
+        </stereotype_attributes>
+    </rewards>
     <name>angryBirdGame</name>
     <statemachine>
         <allmystates>
