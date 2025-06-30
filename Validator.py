@@ -50,6 +50,7 @@ class Validator:
         self.mutant_name = ""
         self.history = []
         self.history_length = -1
+        self.bugs = []
 
 
 
@@ -82,6 +83,7 @@ class Validator:
         self.history_length = 0
         self.algo= "random"
         self.first = True
+        self.bugs = []
 
 
     def loadmodel(self, gamename='angrywalls'):
@@ -97,20 +99,21 @@ class Validator:
         self.allstates = self.sm.findall('allmystates')
         self.allactions = root.findall('actions')
         self.actions = ModelReader.get_action_names(gamename)
-        print("=======HELLY======")
-        print(self.actions)
-        print("=============")
+        #print("=======HELLY======")
+        #print(self.actions)
+        #print("=============")
         self.score_impacts = ModelReader.get_score_impacts(gamename)
         self.booster_durations = ModelReader.get_boosterdurations(gamename)
 
     def validate(self, state, action, done):
         if "__builtins__" in state:
-            print("Removing builtins from gstate")
+            #print("Removing builtins from gstate")
             del state["__builtins__"]
 
 
 
         scoreupdate = state['scoreupdate']
+
 
         #scoreupdate = dotdict(scoreupdate)
 
@@ -128,6 +131,7 @@ class Validator:
         #print(state)
         flag = False
         bugFound = False
+        self.bugs = []
         state_json_string = json.dumps({key: value for key, value in state.items() if key != '__builtins__'})
 
         #check if action effect has taken place
@@ -144,13 +148,15 @@ class Validator:
         if not action_verification:
             self.updateLog(action, state, True, " Action did not perform as expected ")
             bugFound=True
+            self.bugs.append(3)
 
-        if self.booster_durations is not None:
+        if len(self.booster_durations) > 0:
             booster_verification = self.verify_booster_effect(state, self.history[-1])
 
         if not booster_verification:
             self.updateLog(action, state, True, " Booster Effect did not perform as expected ")
             bugFound=True
+            self.bugs.append(1)
 
 
         ingoingTransition = ""
@@ -184,6 +190,7 @@ class Validator:
                             else:
                                 self.updateLog(action, state, True, "  Actual State doesnot match expected state  "+ destinationStateName)
                                 bugFound = True
+                                self.bugs.append(2)
 
                             #check if state has dead stereotype
                             destState = self.find_state_by_name(destinationStateName)
@@ -193,11 +200,13 @@ class Validator:
                                     print("####################################################=====")
 
                                     bugFound = True
+                                    self.bugs.append(2)
                     elif self.previous_state.find("stereotype").text == "dead":
                         self.updateLog(action, state, True, "  Failed to close upon dead state   ")
                         print("####################################################")
 
                         bugFound = True
+                        self.bugs.append(2)
 
             else:
                 if transition.find('guard') is not None:
@@ -221,6 +230,7 @@ class Validator:
             #print("No valid transition found <<ERROR>>")
             self.updateLog(action, state, True, "  No valid transition found ")
             bugFound = True
+            self.bugs.append(2)
 
 
         delta = self.current_score - self.previous_score
@@ -242,6 +252,7 @@ class Validator:
                     f"Incorrect reward: expected addition of {expected_total}, got {delta} (triggers: {', '.join(triggered)})"
                 )
                 bugFound = True
+                self.bugs.append(1)
         elif delta != 0:
             # Score changed, but no valid trigger
             self.updateLog(
@@ -249,6 +260,7 @@ class Validator:
                 f"Unexpected score change: delta {delta} without valid trigger"
             )
             bugFound = True
+            self.bugs.append(1)
 
         state['ingoingTransition'] = ingoingTransition
         self.history.append(state)
@@ -258,6 +270,7 @@ class Validator:
 
         if gamefroze:
             self.updateLog(action, state, True, "  Game Froze ")
+            self.bugs.append(4)
 
         self.previous_score = self.current_score
         self.previous_state = self.current_state
@@ -268,7 +281,7 @@ class Validator:
         # print("self.first", self.first)
         # print(";;;;;;;;;;;;;;;;;;;;")
 
-        return bugFound
+        return bugFound, self.bugs
 
     def checkStateEquality(self, state1, state2):
         state1['ingoingTransition'] = ''
@@ -299,9 +312,9 @@ class Validator:
         f.write(bugStr + "\t" + self.previous_state.find(
             "name").text + "\t" + action + "\t \t \t " + self.current_state.find("name").text + " \t " + state_json_string
              + "\t" + str(self.previous_score) + "\t" + comment + " \n")
-        print(bugStr + "\t" + self.previous_state.find(
-            "name").text + "\t" + action + "\t \t \t " + self.current_state.find("name").text + " \t " + state_json_string
-             + "\t" + str(self.previous_score) + "\t" + comment + " \n")
+        # print(bugStr + "\t" + self.previous_state.find(
+        #     "name").text + "\t" + action + "\t \t \t " + self.current_state.find("name").text + " \t " + state_json_string
+        #      + "\t" + str(self.previous_score) + "\t" + comment + " \n")
         f.close()
 
     def verify_state(self, gstate, previousState):
@@ -346,12 +359,12 @@ class Validator:
                 action_effect = action.find('effect').text
                 action_effect = re.sub(r'(\b\w+)\.(\w+)', r'\1["\2"]', action_effect)
                 #print(previous_game_State)
-                print(action_effect)
+                # print(action_effect)
 
 
                 result = eval(action_effect,
                               required_values)  # {'angryBird': angryBird, 'leftBar': leftBar, 'rightBar': rightBar}
-                print(action_effect, result)
+                # print(action_effect, result)
                 return result
 
         # print("\n\naction not found\n\n")
@@ -372,7 +385,7 @@ class Validator:
 
             result = eval(booster_effect,
                           required_values)  # {'angryBird': angryBird, 'leftBar': leftBar, 'rightBar': rightBar}
-            # print(action_effect, result)
+            #print(booster_effect, result)
             # if required_values[booster[0]]['isActive']:
             #     print("================")
             #     print("================")

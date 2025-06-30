@@ -201,7 +201,7 @@
             <name>bird-inline-with-gap</name>
             <numberofregions>0</numberofregions>
             <outgoingTransitions>
-                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; topPipe.yCoordinate) and (flappyBird.yCoordinate + flappyBird.height  &lt; bottomPipe.yCoordinate)</guard>
+                <guard>((not heart.isActive) and flappyBird.yCoordinate &gt; topPipe.yCoordinate) and (flappyBird.yCoordinate + flappyBird.hieght  &lt; bottomPipe.yCoordinate)</guard>
                 <name></name>
                 <sourceName>bird-inline-with-gap</sourceName>
                 <targetName>bird-inline-with-gap</targetName>
