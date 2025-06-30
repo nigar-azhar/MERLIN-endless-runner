@@ -63,6 +63,11 @@ parser.add_argument("--tries",
                     help="number of tries",
                     default=50)
 
+parser.add_argument("--time_budget",
+                    type=float,
+                    help="number of hours to give random agent",
+                    default=-1)
+
 parser.add_argument("--score",
                     type=int,
                     help="terminal score",

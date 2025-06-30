@@ -114,7 +114,7 @@ optional arguments:
   --frame_size FRAME_SIZE
                         size of game frame in pixels
   --time_budget HOURS
-                        number of hours to run the agent  
+                        number of hours to run the random agent  
 ```
 
 # Parameters specifications for MERLIN agent
